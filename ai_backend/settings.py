@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env') 
 
 
 # Database
@@ -22,19 +23,17 @@ load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+            'sslmode': 'require',  # Supabase는 일반적으로 SSL 연결이 필요합니다
+        }
     }
 }
-print("== DB 설정 테스트 ==")
-print("HOST:", os.getenv("DB_HOST"))
-print("USER:", os.getenv("DB_USER"))
-print("PASSWORD:", os.getenv("DB_PASSWORD"))
-print(repr(os.getenv("DB_PASSWORD")))
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
