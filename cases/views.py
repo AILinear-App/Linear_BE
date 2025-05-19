@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Case
 from datetime import datetime
 import json
+import traceback 
 
 @csrf_exempt
 def create_case(request):
@@ -20,6 +21,7 @@ def create_case(request):
             )
             return JsonResponse({'message': '등록 완료', 'id': case.id}, status=201)
         except Exception as e:
+            traceback.print_exc()
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'error': 'POST만 허용'}, status=405)
 
