@@ -14,3 +14,14 @@ class Case(models.Model):
 
     def __str__(self):
         return self.case_name
+
+class CCTV(models.Model):
+    case = models.ForeignKey('Case', on_delete=models.CASCADE)
+    lat = models.FloatField()
+    lng = models.FloatField()
+    address = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"CCTV at {self.address}"
+

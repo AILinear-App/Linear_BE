@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Case
+from .models import Case, CCTV
 from datetime import datetime
 import json
 import traceback 
@@ -62,16 +62,23 @@ def get_case_detail(request, case_id):
         except Case.DoesNotExist:
             return JsonResponse({'error': '사건이 존재하지 않습니다'}, status=404)
         
-def get_case_route(request, id):
-    # 예시 좌표 데이터 (실제로는 DB에서 가져오도록 구현 필요)
-    route = [
-        {"lat": 37.5665, "lng": 126.9780},
-        {"lat": 37.5651, "lng": 126.9895},
-        {"lat": 37.5640, "lng": 126.9930},
-    ]
-    markers = [
-        {"lat": 37.5665, "lng": 126.9780},  # 사건 발생 위치
-        {"lat": 37.5651, "lng": 126.9895},  # CCTV 위치
-    ]
-    return JsonResponse({"route": route, "markers": markers})
+@csrf_exempt
+def add_cctv(request, case_id):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            lat = data.get("lat")
+            lng = data.get("lng")
+            address = data.get("address")
 
+            case = Case.objects.get(id=case_id)
+
+            CCTV.objects.create(
+                case=case,
+                lat=lat,
+                lng=lng,
+                address=address
+            )
+            return JsonResponse({"message": "CCTV 저장 완료"}, status=201)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
