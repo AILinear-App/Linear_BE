@@ -24,4 +24,6 @@ class CCTV(models.Model):
 
     def __str__(self):
         return f"CCTV at {self.address}"
+    class Meta:
+        db_table = 'cctv'  # ✅ DB의 실제 테이블명과 일치시킴
 
