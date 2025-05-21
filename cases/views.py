@@ -61,4 +61,17 @@ def get_case_detail(request, case_id):
             return JsonResponse(data)
         except Case.DoesNotExist:
             return JsonResponse({'error': '사건이 존재하지 않습니다'}, status=404)
+        
+def get_case_route(request, id):
+    # 예시 좌표 데이터 (실제로는 DB에서 가져오도록 구현 필요)
+    route = [
+        {"lat": 37.5665, "lng": 126.9780},
+        {"lat": 37.5651, "lng": 126.9895},
+        {"lat": 37.5640, "lng": 126.9930},
+    ]
+    markers = [
+        {"lat": 37.5665, "lng": 126.9780},  # 사건 발생 위치
+        {"lat": 37.5651, "lng": 126.9895},  # CCTV 위치
+    ]
+    return JsonResponse({"route": route, "markers": markers})
 
