@@ -82,3 +82,22 @@ def add_cctv(request, case_id):
             return JsonResponse({"message": "CCTV 저장 완료"}, status=201)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
+def get_case_route(request, case_id):
+    if request.method == "GET":
+        try:
+            case = Case.objects.get(id=case_id)
+            cctvs = CCTV.objects.filter(case=case)
+
+            route = []   # 선을 만들고 싶으면 여기 좌표 리스트 넣어줘도 됨
+            markers = [
+                {"lat": c.lat, "lng": c.lng, "address": c.address}
+                for c in cctvs
+            ]
+
+            return JsonResponse({
+                "route": route,
+                "markers": markers
+            })
+        except Case.DoesNotExist:
+            return JsonResponse({"error": "사건이 존재하지 않음"}, status=404)
