@@ -21,7 +21,6 @@ class CCTV(models.Model):
     lng = models.FloatField()
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return f"CCTV at {self.address}"
     class Meta:
