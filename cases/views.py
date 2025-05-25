@@ -16,7 +16,6 @@ def create_case(request):
                 department=data['department'],
                 occurred_at=datetime.fromisoformat(data['occurred_at']),
                 subject_name=data['subject_name'],
-                location=data['location'],
                 memo=data.get('memo', '')
             )
             return JsonResponse({'message': '등록 완료', 'id': case.id}, status=201)
@@ -37,7 +36,6 @@ def get_case_list(request):
                 'department': case.department,
                 'occurred_at': case.occurred_at.isoformat(),
                 'subject_name': case.subject_name,
-                'location': case.location,
                 'memo': case.memo,
             }
             for case in cases
@@ -55,7 +53,6 @@ def get_case_detail(request, case_id):
                 'department': case.department,
                 'occurred_at': case.occurred_at.isoformat(),
                 'subject_name': case.subject_name,
-                'location': case.location,
                 'memo': case.memo,
             }
             return JsonResponse(data)
