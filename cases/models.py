@@ -7,7 +7,7 @@ class Case(models.Model):
 
     occurred_at = models.DateTimeField()         
     subject_name = models.CharField(max_length=100) 
-    location = models.CharField(max_length=200)      
+         
     memo = models.TextField(blank=True)              
 
     created_at = models.DateTimeField(auto_now_add=True)
