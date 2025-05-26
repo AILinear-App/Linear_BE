@@ -76,7 +76,7 @@ def add_cctv(request, case_id):
                 lng=lng,
                 address=address
             )
-            return JsonResponse({"message": "CCTV 저장 완료"}, status=201)
+            return JsonResponse({"message": "CCTV 저장완료"}, status=201)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
 
