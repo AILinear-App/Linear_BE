@@ -138,8 +138,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # ✅ Vite 개발 서버 주소
-    "https://ailinear.onrender.com",  # (필요 시: 프론트 배포 주소도 나중에)
-]
-
+CORS_ALLOW_ALL_ORIGINS = True
